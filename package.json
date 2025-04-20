@@ -4,8 +4,9 @@
   "description": "A module for processing WeChat personal payment QR code payments",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "setup": "node setup.js"
   },
   "keywords": [
     "wechat",
@@ -17,18 +18,21 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "debug": "~2.6.9",
+    "debug": "^4.3.4",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "http-errors": "~1.6.3",
+    "http-errors": "^2.0.0",
     "moment": "^2.30.1",
-    "morgan": "~1.9.1",
+    "morgan": "^1.10.0",
     "mysql2": "^3.6.5"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 } 

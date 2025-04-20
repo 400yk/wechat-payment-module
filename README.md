@@ -1,7 +1,7 @@
-# 微信个人收款码支付模块
+# 微信个人收款码：免签约支付模块
 # WeChat Personal Payment QR Code Module
 
-一个用于处理微信个人收款码支付的Node.js模块。  
+一个用于处理微信个人收款码支付的Node.js模块。开箱即用，不需要营业执照。Javascript集成
 A Node.js module for handling payments through WeChat personal payment QR codes (微信个人收款码).
 
 ## 功能特点 | Features
@@ -11,7 +11,6 @@ A Node.js module for handling payments through WeChat personal payment QR codes 
 - 处理并发支付请求 | Handle concurrent payment requests
 - 通过分配唯一支付金额防止支付冲突 | Prevent payment collisions by assigning unique payment amounts
 - 支持多种会员/产品类型 | Support for multiple membership/product types
-- 包含服务器端API和客户端React组件 | Includes server-side API and client-side React components
 
 ## 工作原理 | How It Works
 
@@ -33,13 +32,6 @@ This module uses a clever approach to verify payments through WeChat personal QR
 - 支付成功图片（重命名为`success.png`） | Success image for successful payments (renamed to `success.png`)
 - 支付超时图片（重命名为`expire.png`）| Payment overtime display image
 
-## 模块结构 | Module Structure
-
-该模块由两部分组成：  
-This module consists of two parts:
-
-1. 服务器端API (Node.js/Express) | Server-side API (Node.js/Express)
-2. 客户端组件 (React) | Client-side Components (React)
 
 ### 服务器端 | Server-side
 
@@ -51,15 +43,6 @@ The server-side code is responsible for:
 - 验证支付状态 | Verifying payment status
 - 数据库操作 | Database operations
 
-### 客户端 | Client-side
-
-客户端代码提供：  
-The client-side code provides:
-
-- 支付对话框React组件 | Payment dialog React component
-- 支付状态检查 | Payment status checking
-- 用户界面和交互 | User interface and interactions
-- 国际化支持 (中英文) | Internationalization support (Chinese and English)
 
 ## 安装 | Installation
 
@@ -67,7 +50,7 @@ The client-side code provides:
 
 1. 克隆仓库 | Clone the repository:
    ```
-   git clone https://github.com/yourusername/wechat-payment-module.git
+   git clone https://github.com/400yk/wechat-payment-module.git
    cd wechat-payment-module
    ```
 
@@ -91,25 +74,28 @@ The client-side code provides:
    mysql -u your_username -p < init_db.sql
    ```
 
-### 客户端 | Client-side
+### 安装疑难解答 | Installation Troubleshooting
 
-客户端组件可以独立使用：  
-The client components can be used independently:
+如果您在安装过程中遇到问题，请尝试以下方法：  
+If you encounter issues during installation, try the following:
 
-1. 进入客户端目录 | Navigate to the client directory:
+1. 确保您使用的是Node.js 14或更高版本 | Make sure you're using Node.js 14 or higher:
    ```
-   cd client
+   node -v
    ```
 
-2. 安装依赖 | Install dependencies:
+2. 如果bcrypt安装失败 | If bcrypt installation fails:
+   - 本模块现在使用纯JavaScript实现的bcryptjs | This module now uses the pure JavaScript implementation bcryptjs
+   - 不再需要安装本地编译工具 | No need for native build tools anymore
+
+3. 权限问题 | Permission issues:
+   - 在Windows上，尝试以管理员身份运行命令行 | On Windows, try running the command prompt as administrator
+   - 在Linux/Mac上，不要使用sudo安装npm包 | On Linux/Mac, don't use sudo to install npm packages
+
+4. 删除node_modules目录并重新安装 | Delete node_modules directory and reinstall:
    ```
+   rm -rf node_modules
    npm install
-   ```
-
-3. 开发或构建 | Development or build:
-   ```
-   npm start     # 开发模式 | Development mode
-   npm run build # 构建生产版本 | Build production version
    ```
 
 ## 使用方法 | Usage

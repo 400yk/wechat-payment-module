@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeChat Payment Module | 微信支付模块</title>
+    <style>
+        body {
+            font-family: "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #07C160;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            color: #666;
+            margin-top: 0;
+            font-weight: normal;
+            font-size: 1.1em;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+        }
+        .language {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        .english {
+            margin-bottom: 5px;
+        }
+        .chinese {
+            color: #333;
+            margin-top: 0;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: Consolas, monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WeChat Payment Module</h1>
+        <h2 class="subtitle">微信支付模块</h2>
+        
+        <div>
+            <p class="english">Welcome to the WeChat Personal Payment QR Code scanning payment module.</p>
+            <p class="chinese">欢迎使用微信个人收款码扫码支付模块。</p>
+        </div>
+        
+        <div class="status">
+            <p class="english">Server status: <strong>Running</strong></p>
+            <p class="chinese">服务器状态：<strong>运行中</strong></p>
+        </div>
+        
+        <div>
+            <h2 class="english">API Endpoints:</h2>
+            <h2 class="chinese">API 接口：</h2>
+            <ul>
+                <li>
+                    <code>/order</code>
+                    <p class="english">Create a new payment order</p>
+                    <p class="chinese">创建新的支付订单</p>
+                </li>
+                <li>
+                    <code>/order/checkPay</code>
+                    <p class="english">Check payment status</p>
+                    <p class="chinese">检查支付状态</p>
+                </li>
+                <li>
+                    <code>/payNotify</code>
+                    <p class="english">Payment notification endpoint</p>
+                    <p class="chinese">支付通知接口</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html> 

@@ -3,6 +3,40 @@ const { MEMBERSHIP_TYPES } = require('../config/memberOfferings');
 const fsPromises = require('fs').promises;
 const path = require('path');
 
+const getMemberOfferings = async (req, res) => {
+    const user = req.user; // Get user from request (set by middleware)
+    let expirationDate = null;
+
+    try {
+        // Query to get the user's expiration date
+        const userMembership = await query('SELECT expire_date FROM user_membership WHERE username = ?', [user]);
+
+        if (userMembership && userMembership.length > 0) {
+            expirationDate = userMembership[0].expire_date;
+        } else {
+            // Handle case where user has no membership record yet
+            // You might want to set a default or indicate they are not a member
+            console.log(`No membership record found for user: ${user}`);
+            // For now, expirationDate remains null
+        }
+
+        // Send back the offerings and the expiration date
+        res.status(200).json({
+            memberOfferings: MEMBERSHIP_TYPES,
+            expirationDate: expirationDate
+        });
+
+    } catch (err) {
+        console.error("Error fetching membership info:", err);
+        // Even if fetching expiration date fails, send the offerings
+        res.status(500).json({
+            memberOfferings: MEMBERSHIP_TYPES,
+            expirationDate: null, // Indicate failure to get date
+            message: "Error fetching user expiration date."
+        });
+    }
+};
+
 const createOrder = async (req, res) => {
     const user = req.user;
     const orderNum = req.body.orderNum;
@@ -136,4 +170,4 @@ const checkPay = async (req, res) => {
     }
 }
 
-module.exports = { createOrder, checkPay }; 
+module.exports = { getMemberOfferings, createOrder, checkPay }; 
