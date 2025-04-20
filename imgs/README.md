@@ -6,6 +6,9 @@ This directory should contain the following image files:
 
 1. `skm.png` - 您的微信个人收款码图片 | Your WeChat personal payment QR code image
 2. `success.png` - 支付完成后显示的成功图片 | Success image to display after payment is completed
+3. `expire.png` - 支持超时显示的图片 | Payment overtime display image
+4. `warning.png` - 错误提示显示的图片 | Error message display image
+5. `zsm.png` - 您的微信个人赞赏码图片（可选）| Your WeChat personal gift payment QR code image (Optional)
 
 ## 重要提示 | Important:
 - 出于安全原因，这些图片未包含在代码库中 | These images are not included in the repository for security reasons

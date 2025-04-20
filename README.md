@@ -11,6 +11,7 @@ A Node.js module for handling payments through WeChat personal payment QR codes 
 - 处理并发支付请求 | Handle concurrent payment requests
 - 通过分配唯一支付金额防止支付冲突 | Prevent payment collisions by assigning unique payment amounts
 - 支持多种会员/产品类型 | Support for multiple membership/product types
+- 包含服务器端API和客户端React组件 | Includes server-side API and client-side React components
 
 ## 工作原理 | How It Works
 
@@ -30,8 +31,39 @@ This module uses a clever approach to verify payments through WeChat personal QR
 - MySQL (v5.7+)
 - 微信个人收款码图片（重命名为`skm.png`） | WeChat personal payment QR code image (renamed to `skm.png`)
 - 支付成功图片（重命名为`success.png`） | Success image for successful payments (renamed to `success.png`)
+- 支付超时图片（重命名为`expire.png`）| Payment overtime display image
+
+## 模块结构 | Module Structure
+
+该模块由两部分组成：  
+This module consists of two parts:
+
+1. 服务器端API (Node.js/Express) | Server-side API (Node.js/Express)
+2. 客户端组件 (React) | Client-side Components (React)
+
+### 服务器端 | Server-side
+
+服务器端代码负责：  
+The server-side code is responsible for:
+
+- 创建和管理支付订单 | Creating and managing payment orders
+- 处理支付通知 | Handling payment notifications
+- 验证支付状态 | Verifying payment status
+- 数据库操作 | Database operations
+
+### 客户端 | Client-side
+
+客户端代码提供：  
+The client-side code provides:
+
+- 支付对话框React组件 | Payment dialog React component
+- 支付状态检查 | Payment status checking
+- 用户界面和交互 | User interface and interactions
+- 国际化支持 (中英文) | Internationalization support (Chinese and English)
 
 ## 安装 | Installation
+
+### 服务器端 | Server-side
 
 1. 克隆仓库 | Clone the repository:
    ```
@@ -52,13 +84,37 @@ This module uses a clever approach to verify payments through WeChat personal QR
 4. 添加您的二维码图片 | Add your QR code images:
    - 将您的微信支付二维码放在`imgs/skm.png` | Place your WeChat payment QR code as `imgs/skm.png`
    - 将成功图片放在`imgs/success.png` | Place your success image as `imgs/success.png`
+   - 将超时图片放在`imgs/expire.png` | Place your timeout image as `imgs/expire.png`
 
 5. 设置数据库 | Set up the database:
    ```
    mysql -u your_username -p < init_db.sql
    ```
 
+### 客户端 | Client-side
+
+客户端组件可以独立使用：  
+The client components can be used independently:
+
+1. 进入客户端目录 | Navigate to the client directory:
+   ```
+   cd client
+   ```
+
+2. 安装依赖 | Install dependencies:
+   ```
+   npm install
+   ```
+
+3. 开发或构建 | Development or build:
+   ```
+   npm start     # 开发模式 | Development mode
+   npm run build # 构建生产版本 | Build production version
+   ```
+
 ## 使用方法 | Usage
+
+### 服务器端 | Server-side
 
 1. 启动服务器 | Start the server:
    ```
@@ -69,6 +125,39 @@ This module uses a clever approach to verify payments through WeChat personal QR
    - `POST /order` - 创建新的支付订单 | Create a new payment order
    - `GET /order/checkPay` - 检查支付状态 | Check payment status
    - `GET /payNotify` - 支付通知端点 | Endpoint for payment notification
+
+### 客户端 | Client-side
+
+```jsx
+import React, { useState } from 'react';
+import { PaymentDialog } from './path/to/wechat-payment-module/client/src';
+
+function App() {
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [amount, setAmount] = useState(0);
+  
+  const handlePaymentSuccess = (expirationDate) => {
+    console.log('支付成功，到期日期:', expirationDate);
+  };
+  
+  return (
+    <div>
+      <button onClick={() => { setAmount(39); setIsPaymentOpen(true); }}>
+        支付会员费用
+      </button>
+      
+      <PaymentDialog
+        open={isPaymentOpen}
+        onClose={() => setIsPaymentOpen(false)}
+        amount={amount}
+        apiBaseUrl="/api"
+        onSuccess={handlePaymentSuccess}
+        lang="zh" // 'zh' 为中文，'en' 为英文
+      />
+    </div>
+  );
+}
+```
 
 ### 创建支付订单 | Creating a Payment Order
 
@@ -125,6 +214,8 @@ GET /payNotify?orderMsg=微信支付收款39.97元
 
 ## 与您的应用程序集成 | Integration with Your Application
 
+### 服务器端集成 | Server-side Integration
+
 该模块可以与您现有的Node.js应用程序集成：  
 This module can be integrated with your existing Node.js application:
 
@@ -136,11 +227,30 @@ This module can be integrated with your existing Node.js application:
    ```
 3. 确保您的认证中间件设置`req.user` | Ensure your authentication middleware sets `req.user`
 
+### 客户端集成 | Client-side Integration
+
+集成React组件到您的前端应用程序：  
+Integrate React components into your frontend application:
+
+1. 复制客户端代码 | Copy the client code:
+   ```
+   cp -r client/src/components/PaymentDialog.jsx path/to/your/app/src/components/
+   cp -r client/src/components/PaymentDialog.css path/to/your/app/src/components/
+   ```
+
+2. 在您的应用程序中导入和使用 | Import and use in your application:
+   ```jsx
+   import PaymentDialog from './components/PaymentDialog';
+   
+   // ... 在您的组件中使用 | Use in your component
+   ```
+
 ## 自定义 | Customization
 
 - 修改`config/memberOfferings.js`以调整您的产品/会员供应 | Modify `config/memberOfferings.js` to adjust your product/membership offerings
 - 自定义控制器中的SQL查询以适应您的数据库结构 | Customize the SQL queries in the controllers to fit your database structure
 - 在控制器中调整超时值和并发支付限制 | Adjust timeout values and concurrent payment limits in the controllers
+- 自定义客户端组件样式 | Customize client component styles
 
 ## 安全考虑 | Security Considerations
 
