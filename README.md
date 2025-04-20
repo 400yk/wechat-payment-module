@@ -252,4 +252,16 @@ Use at your own risk for commercial applications.
 
 ## 许可证 | License
 
-MIT 
+MIT License. See the LICENSE file for details.
+
+### 数据库结构
+
+包含了订单表 (`orderList`) 和 用户会员表 (`user_membership`)。
+
+```sql
+-- 具体结构见 init_db.sql
+```
+
+## Screenshots
+
+![Server Running](./screenshots/server_running.png) 
